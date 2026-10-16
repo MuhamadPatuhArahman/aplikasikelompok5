@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Kelompok 5 Kece</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Kelompok 5 Kece">
+<style>
+html,body{margin:0;height:100%}
+body{background:#dfe6f3;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#phone{width:430px;max-width:100%;height:min(calc(100vh - 24px),920px);background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 20px 60px rgba(18,33,63,.28),0 0 0 8px #12213f}
+#phone iframe{width:100%;height:100%;border:0;display:block}
+</style>
+</head>
+<body>
+<div id="phone"><iframe id="f" title="Kelompok 5 Kece" allow="autoplay; fullscreen"></iframe></div>
+<script>
+(function(){
+  var wide=matchMedia('(min-width:700px) and (hover:hover) and (pointer:fine)');
+  var installed=matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: window-controls-overlay)').matches||matchMedia('(display-mode: minimal-ui)').matches;
+  var W=460, H=Math.min((screen.availHeight||960),960);
+
+  // Aplikasi terpasang di laptop: jadikan jendelanya potret seperti HP
+  function portrait(){
+    try{
+      window.resizeTo(W,H);
+      window.moveTo(Math.max(0,Math.round((screen.availWidth-W)/2)),Math.max(0,Math.round((screen.availHeight-H)/2)));
+    }catch(e){}
+  }
+
+  function go(){
+    if(wide.matches){
+      document.getElementById('f').src='app.html'; // cadangan: bingkai HP
+      if(installed)portrait();
+    }else{location.replace('app.html')}
+  }
+  go();
+
+  var was=wide.matches;
+  addEventListener('resize',function(){
+    if(wide.matches===was)return;
+    was=wide.matches;
+    if(was){ if(installed){portrait()}else{location.reload()} }
+    else{location.replace('app.html')}
+  });
+})();
+</script>
+</body>
+</html>
